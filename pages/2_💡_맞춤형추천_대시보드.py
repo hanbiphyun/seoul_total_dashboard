@@ -3,8 +3,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import platform
-import gdown  # 구글 드라이브 다운로드를 위해 추가됨
+import gdown
 
 font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
 if os.path.exists(font_path):
