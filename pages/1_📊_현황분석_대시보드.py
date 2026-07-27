@@ -14,7 +14,6 @@ def load_data():
     
     local_path = "data_final_light.parquet"
     df = pd.read_parquet(local_path)
-    local_path = "data_final.csv"
     
     for col in df.select_dtypes(include=['float64']).columns:
         df[col] = df[col].astype('float32')
