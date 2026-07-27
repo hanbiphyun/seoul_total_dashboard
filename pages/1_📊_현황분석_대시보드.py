@@ -125,7 +125,7 @@ else:
             color="지하여부_표시" if "지하여부_표시" in sub_df.columns else None,
             hover_data=["건물용도", "건물나이", "층"],
         )
-        st.plotly_chart(fig_scatter, use_container_width=True)
+        st.plotly_chart(fig_scatter, width='stretch')
 
     with c_col2:
         st.markdown("#### 🏢 건물 용도별 분포")
