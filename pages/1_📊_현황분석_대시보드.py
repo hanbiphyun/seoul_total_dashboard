@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import streamlit as st
-import gdown
 import plotly.express as px
 
 st.set_page_config(page_title="현황 분석 대시보드", layout="wide", page_icon="📊")
@@ -12,11 +11,12 @@ st.caption("선택한 지역의 월세 기준 평당 가격 중앙값, 보증금
 @st.cache_data
 def load_data():
     file_id = "11apg9KTfsAtATCnQlSSpuXlTCPoAiNPM"  
-    local_path = "data_final.parquet"
+    local_path = "data_final.csv"
     
-    if not os.path.exists(local_path) or os.path.getsize(local_path) < 1000000:
-        gdown.download(id=file_id, output=local_path, quiet=False)
-    
+    if not os.path.exists(local_path):
+        st.error(f'데이터 파일이 없습니다: {local_path}')
+        st.stop()
+        
     use_cols = [
         '자치구명', '법정동명', '전월세구분', '보증금(만원)', 
         '임대료(만원)', '평당가격', '평수', '건물나이', '건물용도', '층', '지하여부'
