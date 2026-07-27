@@ -6,3 +6,4 @@ folium
 streamlit-folium
 joblib
 gdown
+plotly
