@@ -11,18 +11,10 @@ st.caption("선택한 지역의 월세 기준 평당 가격 중앙값, 보증금
 @st.cache_data
 def load_data():
     file_id = "11apg9KTfsAtATCnQlSSpuXlTCPoAiNPM"  
+    
+    local_path = "data_final_light.parquet"
+    df = pd.read_parquet(local_path)
     local_path = "data_final.csv"
-    
-    if not os.path.exists(local_path):
-        st.error(f'데이터 파일이 없습니다: {local_path}')
-        st.stop()
-        
-    use_cols = [
-        '자치구명', '법정동명', '전월세구분', '보증금(만원)', 
-        '임대료(만원)', '평당가격', '평수', '건물나이', '건물용도', '층', '지하여부'
-    ]
-    
-    df = pd.read_parquet(local_path, columns=use_cols)
     
     for col in df.select_dtypes(include=['float64']).columns:
         df[col] = df[col].astype('float32')
