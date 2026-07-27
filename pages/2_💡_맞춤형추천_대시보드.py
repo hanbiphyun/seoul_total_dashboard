@@ -47,8 +47,22 @@ def load_data():
     if not os.path.exists(local_path) or os.path.getsize(local_path) < 100000:
         with st.spinner("서버에서 추천 데이터를 준비하고 있습니다. 잠시만 기다려주세요..."):
             gdown.download(id=file_id, output=local_path, quiet=False)
-        
-    data = pd.read_parquet(local_path)
+
+    use_cols = [
+        '계약연도', 
+        '자치구명', 
+        '법정동명', 
+        '보증금(만원)', 
+        '임대료(만원)', 
+        '평당가격', 
+        '평수', 
+        '건물나이', 
+        '지하여부', 
+        '건물용도'
+    ]
+    
+    # 지정한 컬럼만 메모리에 올립니다. (속도 향상 + 서버 뻗음 방지)
+    data = pd.read_parquet(local_path, columns=use_cols)
     return data
 
 try:
