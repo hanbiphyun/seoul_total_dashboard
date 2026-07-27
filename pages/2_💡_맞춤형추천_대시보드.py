@@ -6,12 +6,17 @@ import matplotlib.pyplot as plt
 import platform
 import gdown  # 구글 드라이브 다운로드를 위해 추가됨
 
-if platform.system() == 'Darwin':
-    plt.rc('font', family='AppleGothic')
-elif platform.system() == 'Windows':
-    plt.rc('font', family='Malgun Gothic')
-else:
+font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+if os.path.exists(font_path):
+    fm.fontManager.addfont(font_path)
     plt.rc('font', family='NanumGothic')
+else:
+    # 로컬 테스트용
+    if platform.system() == 'Darwin':
+        plt.rc('font', family='AppleGothic')
+    elif platform.system() == 'Windows':
+        plt.rc('font', family='Malgun Gothic')
+
 plt.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(
