@@ -252,7 +252,7 @@ if st.sidebar.button('🚀 추천 지역 찾기', type='primary'):
             display_df['조건적합률'] = display_df['조건적합률'] * 100
             display_df = display_df.rename(columns={'조건적합률': '조건적합률(%)'})
 
-            st.dataframe(display_df.round(2), use_container_width=True, hide_index=True)
+            st.dataframe(display_df.round(2), width='stretch', hide_index=True)
 
             # 추천 점수 그래프
             st.divider()
@@ -288,4 +288,4 @@ if st.sidebar.button('🚀 추천 지역 찾기', type='primary'):
             with st.expander('📄 조건을 만족한 개별 거래 원본 데이터 보기 (최대 1000건)'):
                 house_columns = [col for col in ['계약연도', '자치구명', '법정동명', '보증금(만원)', '임대료(만원)', '평당가격', '평수', '건물나이', '지하여부', '건물용도'] if col in matched.columns]
                 matched_display = matched[house_columns].sort_values(by=['보증금(만원)', '평당가격']).head(1000)
-                st.dataframe(matched_display, use_container_width=True, hide_index=True)
+                st.dataframe(matched_display,width='stretch', hide_index=True)
