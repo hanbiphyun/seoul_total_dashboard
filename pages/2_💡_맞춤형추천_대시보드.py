@@ -5,7 +5,6 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import platform
-import gdown
 
 font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
 if os.path.exists(font_path):
@@ -41,13 +40,13 @@ def load_data():
     # 아래 따옴표 안에 아까 구글 드라이브에서 복사한 파일 ID를 붙여넣으세요!
     file_id = "1DRpgms4olDIK4946bi4b79huYlcmQIm6"  
     
-    local_path = "recommend_data.parquet"
+    local_path = "recommend_data.csv"
     
     # 파일이 없거나 용량이 너무 작으면(오류 파일) 구글 드라이브에서 다운로드
-    if not os.path.exists(local_path) or os.path.getsize(local_path) < 100000:
-        with st.spinner("서버에서 추천 데이터를 준비하고 있습니다. 잠시만 기다려주세요..."):
-            gdown.download(id=file_id, output=local_path, quiet=False)
-
+    if not os.path.exists(local_path):
+        st.error(f'데이터 파일이 없습니다: {local_path}')
+        st.stop()
+        
     use_cols = [
         '계약연도', 
         '자치구명', 
