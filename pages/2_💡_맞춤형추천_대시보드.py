@@ -7,15 +7,22 @@ import matplotlib.font_manager as fm
 import platform
 
 font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+
 if os.path.exists(font_path):
+    # 1. 폰트 파일을 직접 Matplotlib에 추가
     fm.fontManager.addfont(font_path)
-    plt.rc('font', family='NanumGothic')
+    
+    # 2. 🌟 핵심: 파일에서 정확한 폰트 이름을 강제로 추출 ('NanumGothic' 인지 'Nanum Gothic'인지 오차 방지)
+    font_name = fm.FontProperties(fname=font_path).get_name()
+    
+    # 3. 추출한 이름으로 폰트 설정
+    plt.rc('font', family=font_name)
+elif platform.system() == 'Darwin':
+    plt.rc('font', family='AppleGothic')
+elif platform.system() == 'Windows':
+    plt.rc('font', family='Malgun Gothic')
 else:
-    # 로컬 테스트용
-    if platform.system() == 'Darwin':
-        plt.rc('font', family='AppleGothic')
-    elif platform.system() == 'Windows':
-        plt.rc('font', family='Malgun Gothic')
+    plt.rc('font', family='NanumGothic')
 
 plt.rcParams['axes.unicode_minus'] = False
 
