@@ -37,37 +37,14 @@ st.write(
 # ==========================================
 @st.cache_data
 def load_data():
-    # 아래 따옴표 안에 아까 구글 드라이브에서 복사한 파일 ID를 붙여넣으세요!
-    file_id = "1DRpgms4olDIK4946bi4b79huYlcmQIm6"  
-    
-    local_path = "recommend_data.csv"
-    
-    # 파일이 없거나 용량이 너무 작으면(오류 파일) 구글 드라이브에서 다운로드
-    if not os.path.exists(local_path):
-        st.error(f'데이터 파일이 없습니다: {local_path}')
-        st.stop()
-        
-    use_cols = [
-        '계약연도', 
-        '자치구명', 
-        '법정동명', 
-        '보증금(만원)', 
-        '임대료(만원)', 
-        '평당가격', 
-        '평수', 
-        '건물나이', 
-        '지하여부', 
-        '건물용도'
-    ]
-    
-    # 지정한 컬럼만 메모리에 올립니다. (속도 향상 + 서버 뻗음 방지)
-    data = pd.read_parquet(local_path, columns=use_cols)
+    local_path = "recommend_data_light.parquet"
+    data = pd.read_parquet(local_path)
     return data
 
 try:
     df = load_data()
 except Exception as error:
-    st.error(f'데이터 불러오기 실패: 구글 드라이브 공유 권한이 "링크가 있는 모든 사용자"인지, 파일 ID가 정확한지 확인해주세요. (에러내용: {error})')
+    st.error(f'데이터 파일(recommend_data_light.parquet)을 찾을 수 없습니다. 깃허브 업로드를 확인해주세요. ({error})')
     st.stop()
 
 def minmax_score(series, reverse=False):
